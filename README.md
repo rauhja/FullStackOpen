@@ -1,13 +1,16 @@
 # FullStackOpen
 
-Introduction course to modern web development including React, Redux, Node.js, MongoDB, GraphQL and Typescript.
+## About this course
+Introduction course to modern web development including React, Redux, Node.js, MongoDB, GraphQL and Typescript. Course mainly focuses on building single page applications with ReactJS that use REST APIs built with Node.js.
 
-[Full Stack Open](https://fullstackopen.com/en)
+## About this repository
 
-### Status
+The repository contains my returned exercises to the [Full Stack Open](https://fullstackopen.com/en) course from the University of Helsinki.
 
-- [x] Part 0: Fundamentals of Web apps
-- [x] Part 1: Introduction to React
+## Status
+
+- [x] Part 0: [Fundamentals of Web apps](https://github.com/rauhja/FullStackOpen/tree/main/Osa0)
+- [x] Part 1: [Introduction to React](https://github.com/rauhja/FullStackOpen/tree/main/Osa1)
 - [ ] Part 2: Communicating with Server
 - [ ] Part 3: Programming a server with NodeJS and Express
 - [ ] Part 4: Testing Express servers, user administration
