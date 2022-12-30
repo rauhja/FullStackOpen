@@ -11,7 +11,7 @@ The repository contains my returned exercises to the [Full Stack Open](https://f
 
 - [x] Part 0: [Fundamentals of Web apps](https://github.com/rauhja/FullStackOpen/tree/main/Osa0)
 - [x] Part 1: [Introduction to React](https://github.com/rauhja/FullStackOpen/tree/main/Osa1)
-- [ ] Part 2: Communicating with Server
+- [x] Part 2: [Communicating with Server](https://github.com/rauhja/FullStackOpen/tree/main/Osa2)
 - [ ] Part 3: Programming a server with NodeJS and Express
 - [ ] Part 4: Testing Express servers, user administration
 - [ ] Part 5: Testing React apps
