@@ -1,6 +1,6 @@
 # FullStackOpen
 
-## About this course
+## About course
 Introduction course to modern web development including React, Redux, Node.js, MongoDB, GraphQL and Typescript. Course mainly focuses on building single page applications with ReactJS that use REST APIs built with Node.js.
 
 ## About this repository
