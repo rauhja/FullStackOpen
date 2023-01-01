@@ -18,6 +18,8 @@ const App = () => {
       .then(initialPersons => {
         setPersons(initialPersons)
       })
+      .catch(error =>
+        console.error(error))
   },[])
 
   const addNumber = (event) => {
@@ -26,7 +28,7 @@ const App = () => {
       name: newName,
       number: newNumber,
     }
-    if (persons.some(person => person.name.toLowerCase().includes(newName.toLowerCase()))) {
+    if (persons.some(person => person.name.toLowerCase() === personsObject.name.toLowerCase())) {
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         const person = persons.find(p => p.name === newName)
         const changedPerson = { ...person, number: newNumber}
@@ -42,6 +44,7 @@ const App = () => {
             setTimeout(() => {
               setNotificationMessage(null)
             }, 5000)
+            setPersons(persons.filter(p => p.name !== newName))
           })
         setNotificationMessage({text: `${person.name}'s number was updated to the phonebook`, type: 'notification'})
         setTimeout(() => {
@@ -56,6 +59,9 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+        })
+        .catch(error => {
+          setNotificationMessage({text: error.response.data.error, type: 'error'})
         })
       setNotificationMessage({text: `${newName} was added to the phonebook`, type: 'notification'})
       setTimeout(() => {
