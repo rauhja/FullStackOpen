@@ -35,7 +35,7 @@ console.log(process.env.NODE_ENV)
 
 if (process.env.NODE_ENV === 'test') {
     const testingRouter = require('./controllers/testing')
-    app.use('api/testing', testingRouter)
+    app.use('/api/testing', testingRouter)
 }
 
 app.use(middleware.unknownEndpoint)
