@@ -9,27 +9,31 @@ const AnecdoteList = () => {
         ? state.anecdotes.filter(anecdote => 
             anecdote.content
                 .toLowerCase()
-                .includes(state.filter.toLowerCase())).sort((a,b) => b.votes - a.votes)
+                .includes(state.filter.toLowerCase()))
+                .sort((a,b) => b.votes - a.votes)
         : state.anecdotes
-        )
-
+    )
+    
     const handleVote = (anecdote) => {
-      dispatch(increaseVote(anecdote.id))
+      dispatch(increaseVote(anecdote))
       dispatch(setNotification(`you voted '${anecdote.content}'`, 5000))
     }
 
-    return [...anecdotes].sort((a,b) => b.votes - a.votes)
-        .map(anecdote => (
+    return (
+        <div>
+            {anecdotes.map(anecdote => 
             <div key={anecdote.id}>
                 <div>
-                {anecdote.content}
+                    {anecdote.content}
                 </div>
                 <div>
-                has {anecdote.votes}
-                <button onClick={() => handleVote(anecdote)}>vote</button>
+                    has {anecdote.votes}
+                    <button onClick={() => handleVote(anecdote)}>vote</button>
                 </div>
             </div>
-        ))
+            )}
+        </div>
+    )
 }
 
 export default AnecdoteList
