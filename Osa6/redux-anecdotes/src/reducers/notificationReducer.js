@@ -24,7 +24,7 @@ export const setNotification = (message, time) => {
     return dispatch => {
         clearTimeout(timeoutID)
         dispatch(showNotification(message))
-        timeoutID = setTimeout(() => dispatch(hideNotification()), time)
+        timeoutID = setTimeout(() => dispatch(hideNotification()), time*1000)
     }
 }
 export default reducer
