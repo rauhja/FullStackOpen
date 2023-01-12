@@ -5,3 +5,4 @@ fly.toml
 Dockerfile
 .dockerignore
 .env
+.prettierignore

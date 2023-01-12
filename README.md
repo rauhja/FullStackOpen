@@ -16,7 +16,7 @@ The repository contains my returned exercises to the [Full Stack Open](https://f
 - [x] Part 4: [Testing Express servers, user administration](https://github.com/rauhja/FullStackOpen/tree/main/Osa4/bloglist)
 - [x] Part 5: [Testing React apps](https://github.com/rauhja/FullStackOpen/tree/main/Osa5/bloglist-frontend)
 - [x] Part 6: [State Management with Redux](https://github.com/rauhja/FullStackOpen/tree/main/Osa6)
-- [ ] Part 7: React Router, Custom Hooks, Styling app with CSS and Webpack
+- [x] Part 7: [React Router, Custom Hooks, Styling app with CSS and Webpack](https://github.com/rauhja/FullStackOpen/tree/main/Osa7)
 - [ ] Part 8: GraphQL
 - [ ] Part 9: TypeScript
 - [ ] Part 10: React Native
