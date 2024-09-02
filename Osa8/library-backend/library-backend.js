@@ -120,12 +120,8 @@ const typeDefs = `
   type Query {
     bookCount: Int!
     authorCount: Int!
-    allBooks(author: String): [Book!]!
+    allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
-  }
-
-  type Query {
-    allBooks(genre: String): [Book!]!
   }
   
   type Book {
@@ -163,18 +159,24 @@ const resolvers = {
     bookCount: async () => await Book.collection.countDocuments(),
     authorCount: async () => await Author.collection.countDocuments(),
     allBooks: async (root, args) => {
-      if (!args.author) {
-        return await Book.find({});
+      let filter = {};
+      if (args.author) {
+        const author = await Author.findOne({ name: args.author });
+        if (author) {
+          filter.author = author._id;
+        }
       }
-      if (!args.genre) {
-        return await Book.find({});
+      if (args.genre) {
+        filter.genres = { $in: [args.genre] };
       }
+      return await Book.find(filter).populate("author");
     },
     allAuthors: async () => await Author.find({}),
   },
   Author: {
-    bookCount: (root) =>
-      books.filter((book) => book.author === root.name).length,
+    bookCount: async (root) => {
+      return await Book.countDocuments({ author: root._id });
+    },
   },
   Mutation: {
     addBook: async (root, args) => {
@@ -208,16 +210,20 @@ const resolvers = {
         });
       }
     },
-    editAuthor: (root, args) => {
-      const author = authors.find((author) => author.name === args.name);
-      if (!author) {
-        return null;
-      }
-      const updatedAuthor = { ...author, born: args.setBornTo };
-      authors = authors.map((author) =>
-        author.name === args.name ? updatedAuthor : author
+    editAuthor: async (root, args) => {
+      const author = await Author.findOneAndUpdate(
+        { name: args.name },
+        { born: args.setBornTo }
       );
-      return updatedAuthor;
+      if (!author) {
+        throw new GraphQLError("Author not found", {
+          extensions: {
+            code: "BAD_USER_INPUT",
+            invalidArgs: args.name,
+          },
+        });
+      }
+      return author;
     },
   },
 };
