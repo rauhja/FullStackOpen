@@ -1,5 +1,6 @@
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
+const { GraphQLError } = require("graphql");
 const { v1: uuid } = require("uuid");
 
 const mongoose = require("mongoose");
@@ -159,31 +160,53 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
-    allBooks: (root, args) => {
-      return books.filter((book) => {
-        const byAuthor = !args.author || book.author === args.author;
-        const byGenre = !args.genre || book.genres.includes(args.genre);
-        return byAuthor && byGenre;
-      });
+    bookCount: async () => await Book.collection.countDocuments(),
+    authorCount: async () => await Author.collection.countDocuments(),
+    allBooks: async (root, args) => {
+      if (!args.author) {
+        return await Book.find({});
+      }
+      if (!args.genre) {
+        return await Book.find({});
+      }
     },
-    allAuthors: () => authors,
+    allAuthors: async () => await Author.find({}),
   },
   Author: {
     bookCount: (root) =>
       books.filter((book) => book.author === root.name).length,
   },
   Mutation: {
-    addBook: (root, args) => {
-      let author = authors.find((author) => author.name === args.author);
+    addBook: async (root, args) => {
+      let author = await Author.findOne({ name: args.author });
+
       if (!author) {
-        author = { name: args.author, id: uuid() };
-        authors = authors.concat(author);
+        author = new Author({ name: args.author });
+        try {
+          await author.save();
+        } catch (error) {
+          throw new GraphQLError("Saving author failed", {
+            extensions: {
+              code: "BAD_USER_INPUT",
+              invalidArgs: args.author,
+              error,
+            },
+          });
+        }
       }
-      const book = { ...args, id: uuid() };
-      books = books.concat(book);
-      return book;
+      const book = new Book({ ...args, author: author._id });
+      try {
+        await book.save();
+        return book.populate("author");
+      } catch (error) {
+        throw new GraphQLError("Saving book failed", {
+          extensions: {
+            code: "BAD_USER_INPUT",
+            invalidArgs: args.title,
+            error,
+          },
+        });
+      }
     },
     editAuthor: (root, args) => {
       const author = authors.find((author) => author.name === args.name);
