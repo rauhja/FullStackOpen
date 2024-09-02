@@ -4,6 +4,7 @@ import UpdateAuthor from "./UpdateAuthor";
 
 const Authors = (props) => {
   const results = useQuery(ALL_AUTHORS);
+
   if (!props.show) {
     return null;
   }
@@ -34,7 +35,7 @@ const Authors = (props) => {
           </tbody>
         </table>
       </div>
-      <UpdateAuthor authors={authors} />
+      {props.token && <UpdateAuthor authors={authors} />}
     </>
   );
 };
