@@ -187,13 +187,26 @@ const resolvers = {
         try {
           await author.save();
         } catch (error) {
-          throw new GraphQLError("Saving author failed", {
-            extensions: {
-              code: "BAD_USER_INPUT",
-              invalidArgs: args.author,
-              error,
-            },
-          });
+          if (error.name === "ValidationError") {
+            throw new GraphQLError(
+              "Authors name must be at least 4 characters long",
+              {
+                extensions: {
+                  code: "GRAPHQL_VALIDATION_FAILED",
+                  invalidArgs: args.author,
+                  error,
+                },
+              }
+            );
+          } else {
+            throw new GraphQLError("Saving author failed", {
+              extensions: {
+                code: "BAD_USER_INPUT",
+                invalidArgs: args.author,
+                error,
+              },
+            });
+          }
         }
       }
       const book = new Book({ ...args, author: author._id });
@@ -201,13 +214,34 @@ const resolvers = {
         await book.save();
         return book.populate("author");
       } catch (error) {
-        throw new GraphQLError("Saving book failed", {
-          extensions: {
-            code: "BAD_USER_INPUT",
-            invalidArgs: args.title,
-            error,
-          },
-        });
+        if (error.name === "ValidationError") {
+          throw new GraphQLError(
+            "Title must be at least 5 characters long and unique",
+            {
+              extensions: {
+                code: "GRAPHQL_VALIDATION_FAILED",
+                invalidArgs: args.title,
+                error,
+              },
+            }
+          );
+        } else if (error.code === 11000) {
+          throw new GraphQLError("Title must be unique", {
+            extensions: {
+              code: "BAD_USER_INPUT",
+              invalidArgs: args.title,
+              error,
+            },
+          });
+        } else {
+          throw new GraphQLError("Saving book failed", {
+            extensions: {
+              code: "BAD_USER_INPUT",
+              invalidArgs: args.title,
+              error,
+            },
+          });
+        }
       }
     },
     editAuthor: async (root, args) => {
