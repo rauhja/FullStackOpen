@@ -12,6 +12,11 @@ const Authors = (props) => {
   if (results.loading) {
     return <div>Loading...</div>;
   }
+
+  if (results.error) {
+    return <div>Error: {results.error.message}</div>;
+  }
+
   const authors = results.data.allAuthors;
 
   return (
