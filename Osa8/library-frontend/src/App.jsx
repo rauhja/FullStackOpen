@@ -13,8 +13,10 @@ const App = () => {
   const [token, setToken] = useState(null);
   const client = useApolloClient();
 
-  const result = useQuery(ME);
-  const user = result.data.me;
+  const result = useQuery(ME, {
+    skip: !token,
+  });
+  const user = result?.data?.me || null;
 
   const logout = () => {
     setToken(null);

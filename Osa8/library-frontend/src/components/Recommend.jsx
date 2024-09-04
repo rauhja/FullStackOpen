@@ -3,8 +3,8 @@ import { ALL_BOOKS } from "../queries";
 
 const Recommend = ({ show, user }) => {
   const { data, error, loading } = useQuery(ALL_BOOKS, {
-    variables: { genre: user.favoriteGenre },
-    skip: !show,
+    variables: { genre: user?.favoriteGenre },
+    skip: !show || !user,
   });
 
   if (!show) {

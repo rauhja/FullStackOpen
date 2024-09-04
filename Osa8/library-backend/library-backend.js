@@ -29,6 +29,7 @@ const typeDefs = `
     allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
     me: User
+    allGenres: [String!]!
   }
   
   type Book {
@@ -101,6 +102,10 @@ const resolvers = {
     allAuthors: async () => await Author.find({}),
     me: async (root, args, context) => {
       return context.currentUser;
+    },
+    allGenres: async () => {
+      const books = await Book.find({});
+      return Array.from(new Set(books.flatMap((book) => book.genres)));
     },
   },
   Author: {
