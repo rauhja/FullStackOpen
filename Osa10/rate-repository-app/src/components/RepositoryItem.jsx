@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     margin: 16,
-    borderRadius: 5,
+    borderRadius: theme.borderRadius.default,
   },
   repositoryStats: {
     display: "flex",

@@ -18,6 +18,10 @@ const theme = {
     semibold: "500",
     bold: "700",
   },
+  borderRadius: {
+    default: 8,
+    small: 4,
+  },
 };
 
 export default theme;
