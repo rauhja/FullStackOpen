@@ -1,5 +1,6 @@
 /Osa1/part1
 /Osa3/example
+/Osa10/rate-repository-api
 node_modules/
 fly.toml
 Dockerfile
