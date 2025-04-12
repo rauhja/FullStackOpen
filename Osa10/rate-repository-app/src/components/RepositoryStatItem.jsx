@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const RepositoryStatItem = ({ itemCount, label }) => {
+const RepositoryStatItem = ({ itemCount, label, testID }) => {
   const roundItem = (number) => {
     if (number > 1000) {
       return (number / 1000).toFixed(1) + "k";
@@ -21,7 +21,7 @@ const RepositoryStatItem = ({ itemCount, label }) => {
   };
 
   return (
-    <View style={styles.repositoryStatCell}>
+    <View testID={testID} style={styles.repositoryStatCell}>
       <Text fontWeight="bold" fontSize="subheading">
         {roundItem(itemCount)}
       </Text>

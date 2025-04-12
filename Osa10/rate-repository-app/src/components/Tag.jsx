@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Tag = ({ label }) => {
+const Tag = ({ label, testID }) => {
   return (
-    <View style={styles.tag}>
+    <View testID={testID} style={styles.tag}>
       <Text style={{ color: "white" }}>{label}</Text>
     </View>
   );
