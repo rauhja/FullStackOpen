@@ -24,7 +24,10 @@ const parsedArguments = (args: string[]): ParsedArgs => {
   return { value1, value2 };
 };
 
-const exerciseCalculator = (exerciseHours: number[], targetHours: number) => {
+const exerciseCalculator = (
+  exerciseHours: number[],
+  targetHours: number
+): Result => {
   const trainingDays = exerciseHours.filter((item) => item > 0).length;
   const trainingHours = exerciseHours.reduce((acc, item) => acc + item, 0);
   const targetMet = exerciseHours.map((exercise) => exercise >= targetHours);
@@ -60,11 +63,13 @@ const exerciseCalculator = (exerciseHours: number[], targetHours: number) => {
   };
 };
 
-try {
-  const { value1, value2 } = parsedArguments(process.argv);
-  console.log(exerciseCalculator(value2, value1));
-} catch (error: unknown) {
-  if (error instanceof Error) {
-    console.log("Something went wrong!", error.message);
+if (require.main === module) {
+  try {
+    const { value1, value2 } = parsedArguments(process.argv);
+    console.log(exerciseCalculator(value2, value1));
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log("Something went wrong!", error.message);
+    }
   }
 }
