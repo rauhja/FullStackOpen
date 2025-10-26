@@ -1,63 +1,49 @@
-interface HeaderProps {
-  name: string;
-}
-const Header = (props: HeaderProps) => {
-  return <h1>{props.name}</h1>;
-};
-
-interface CoursePart {
-  name: string;
-  exerciseCount: number;
-}
-
-const Part = ({ name, exerciseCount }: CoursePart) => {
-  return (
-    <p>
-      {name} {exerciseCount}
-    </p>
-  );
-};
-
-interface ContentProps {
-  course: CoursePart[];
-}
-
-const Content = ({ course }: ContentProps) => {
-  return (
-    <div>
-      {course.map((part) => (
-        <Part
-          key={part.name}
-          name={part.name}
-          exerciseCount={part.exerciseCount}
-        />
-      ))}
-    </div>
-  );
-};
-
-interface TotalProps {
-  total: number;
-}
-
-const Total = ({ total }: TotalProps) => {
-  return <p>Number of exercises {total}</p>;
-};
+import Content from "./components/Content";
+import Header from "./components/Header";
+import Total from "./components/Total";
+import type { CoursePart } from "./types";
 
 const App = () => {
   const courseName = "Half Stack application development";
-  const courseParts = [
+  const courseParts: CoursePart[] = [
     {
       name: "Fundamentals",
       exerciseCount: 10,
+      description: "This is an awesome course part",
+      kind: "basic",
     },
     {
       name: "Using props to pass data",
       exerciseCount: 7,
+      groupProjectCount: 3,
+      kind: "group",
+    },
+    {
+      name: "Basics of type Narrowing",
+      exerciseCount: 7,
+      description: "How to go from unknown to string",
+      kind: "basic",
     },
     {
       name: "Deeper type usage",
       exerciseCount: 14,
+      description: "Confusing description",
+      backgroundMaterial:
+        "https://type-level-typescript.com/template-literal-types",
+      kind: "background",
+    },
+    {
+      name: "TypeScript in frontend",
+      exerciseCount: 10,
+      description: "a hard part",
+      kind: "basic",
+    },
+    {
+      name: "Backend development",
+      exerciseCount: 21,
+      description: "Typing the backend",
+      requirements: ["nodejs", "jest"],
+      kind: "special",
     },
   ];
 
