@@ -1,10 +1,12 @@
 import { SyntheticEvent, useEffect, useState } from "react";
 import { DiaryEntry, NewDiaryEntry } from "./types";
 import { getAllEntries, createEntry } from "./diaryService";
+import axios from "axios";
 import "./App.css";
 
 function App() {
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [newEntry, setNewEntry] = useState<NewDiaryEntry>({
     date: "",
     visibility: "",
@@ -20,9 +22,18 @@ function App() {
 
   const entryCreation = (event: SyntheticEvent) => {
     event.preventDefault();
-    createEntry(newEntry).then((data) => {
-      setEntries(entries.concat(data));
-    });
+    setErrorMessage("");
+    createEntry(newEntry)
+      .then((data) => {
+        setEntries(entries.concat(data));
+      })
+      .catch((error) => {
+        if (axios.isAxiosError(error) && error.response) {
+          setErrorMessage(error.response.data);
+        } else {
+          setErrorMessage("An unexpected error occurred");
+        }
+      });
     setNewEntry({
       date: "",
       visibility: "",
@@ -34,6 +45,7 @@ function App() {
     <>
       <div>
         <h3>Add new entry</h3>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form onSubmit={entryCreation} className="form">
           <div className="input-container">
             <label htmlFor="input-date">Date: </label>
