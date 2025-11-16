@@ -12,6 +12,8 @@ export interface Diagnosis {
   name: string;
   latin?: string;
 }
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface Entry {}
 
 export interface Patient {
   id: string;
@@ -20,6 +22,7 @@ export interface Patient {
   ssn: string;
   gender: Gender;
   occupation: string;
+  entries: Entry[];
 }
 export type NewPatient = z.infer<typeof newPatientSchema>;
 
@@ -27,4 +30,4 @@ export interface Patient extends NewPatient {
   id: string;
 }
 
-export type NonSensitivePatientInfo = Omit<Patient, "ssn">;
+export type NonSensitivePatientInfo = Omit<Patient, "ssn" | "entries">;
