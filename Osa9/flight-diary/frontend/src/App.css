@@ -3,11 +3,17 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  width: 100%;
 }
 
 .card {
   padding: 0.5em;
+  width: 100%;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
 }
 
 .form {
@@ -21,8 +27,18 @@
   display: flex;
   flex-direction: column;
   align-items: start;
+  width: 100%;
 }
 
+.radio-container {
+  display: flex;
+  gap: 0.5rem;
+}
 .error-message {
   color: red;
+}
+
+.entry-container {
+  display: flex;
+  flex-direction: column;
 }
