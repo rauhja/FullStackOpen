@@ -7,4 +7,3 @@ Dockerfile
 .dockerignore
 .env
 .prettierignore
-/Osa9/patientor-fso
