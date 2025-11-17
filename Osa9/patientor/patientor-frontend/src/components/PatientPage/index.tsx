@@ -1,25 +1,52 @@
 import { Box, List, ListItem, Typography } from "@mui/material";
-import { Gender, Patient } from "../../types";
+import { Entry, Gender, Patient } from "../../types";
 import { useParams } from "react-router-dom";
 import { Male, Female, Transgender } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import patientService from "../../services/patients";
 import diagnosisService from "../../services/diagnoses";
+import HospitalEntry from "./HospitalEntryDetail";
+import OccupationalEntryDetail from "./OccupationalEntryDetail";
+import HealthCheckEntryDetail from "./HealthCheckEntryDetail";
+
+import { Work, MedicalServices, LocalHospital } from "@mui/icons-material";
 
 const genderIcon = (gender: Gender) => {
   switch (gender) {
-    case "male":
+    case Gender.Male:
       return <Male />;
-    case "female":
+    case Gender.Female:
       return <Female />;
-    default:
+    case Gender.Other:
       return <Transgender />;
+  }
+};
+
+const EntryTypeIcon: React.FC<{ entry: Entry }> = ({ entry }) => {
+  switch (entry.type) {
+    case "Hospital":
+      return <LocalHospital />;
+    case "OccupationalHealthcare":
+      return <Work />;
+    case "HealthCheck":
+      return <MedicalServices />;
+  }
+};
+
+const EntryDetails: React.FC<{ entry: Entry }> = ({ entry }) => {
+  switch (entry.type) {
+    case "Hospital":
+      return <HospitalEntry entry={entry} />;
+    case "OccupationalHealthcare":
+      return <OccupationalEntryDetail entry={entry} />;
+    case "HealthCheck":
+      return <HealthCheckEntryDetail entry={entry} />;
   }
 };
 
 const PatientPage = () => {
   const [patient, setPatient] = useState<Patient>();
-  const [diagnosis, setDiagnosis] = useState<Map<string, string>>(new Map());
+  const [diagnoses, setDiagnosis] = useState<Map<string, string>>(new Map());
   const [error, setError] = useState("");
   const id = useParams().id;
 
@@ -66,16 +93,24 @@ const PatientPage = () => {
           Entries
         </Typography>
         {patient?.entries.map((entry) => (
-          <Box key={entry.id}>
-            <Typography>{entry.date}</Typography>
-            <Typography>{entry.description}</Typography>
-            <List dense={true}>
+          <Box key={entry.id} sx={{ padding: 1, border: 1, borderRadius: 2 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+              {entry.date} <EntryTypeIcon entry={entry} />
+            </Typography>
+            <Typography sx={{ fontStyle: "italic" }}>
+              {entry.description}
+            </Typography>
+            <List dense={true} disablePadding={true} sx={{ padding: 1 }}>
               {entry.diagnosisCodes?.map((code) => (
                 <ListItem key={code}>
-                  - {code} {diagnosis.get(code)}
+                  - {code} {diagnoses.get(code)}
                 </ListItem>
               ))}
             </List>
+            <EntryDetails entry={entry} />
+            <Typography sx={{ paddingTop: 2 }}>
+              Diagnose by {entry.specialist}
+            </Typography>
           </Box>
         ))}
       </Box>
