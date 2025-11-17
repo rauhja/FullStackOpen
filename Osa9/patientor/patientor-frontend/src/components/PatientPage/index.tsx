@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
 import { Gender, Patient } from "../../types";
 import { useParams } from "react-router-dom";
 import { Male, Female, Transgender } from "@mui/icons-material";
@@ -53,6 +53,23 @@ const PatientPage = () => {
         </Typography>
         <Typography>SSN: {patient?.ssn}</Typography>
         <Typography>Occupation: {patient?.occupation}</Typography>
+      </Box>
+      <Box sx={{ my: 2 }}>
+        <Typography variant="h6" gutterBottom={true}>
+          Entries
+        </Typography>
+        {patient &&
+          patient.entries.map((entry) => (
+            <>
+              <Typography>{entry.date}</Typography>
+              <Typography>{entry.description}</Typography>
+              <List dense={true}>
+                {entry.diagnosisCodes?.map((diagnose) => (
+                  <ListItem>- {diagnose}</ListItem>
+                ))}
+              </List>
+            </>
+          ))}
       </Box>
     </div>
   );
