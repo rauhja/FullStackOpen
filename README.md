@@ -6,7 +6,7 @@ Introduction course to modern web development including React, Redux, Node.js, M
 
 ## About this repository
 
-The repository contains my returned exercises to the [Full Stack Open](https://fullstackopen.com/en) course from the University of Helsinki.
+The repository contains my returned exercises for the [Full Stack Open](https://fullstackopen.com/en) course from the University of Helsinki.
 
 ## Status
 
@@ -19,7 +19,7 @@ The repository contains my returned exercises to the [Full Stack Open](https://f
 - [x] Part 6: [State Management with Redux](https://github.com/rauhja/FullStackOpen/tree/main/Osa6)
 - [x] Part 7: [React Router, Custom Hooks, Styling app with CSS and Webpack](https://github.com/rauhja/FullStackOpen/tree/main/Osa7)
 - [x] Part 8: [GraphQL](https://github.com/rauhja/FullStackOpen/tree/main/Osa8)
-- [ ] Part 9: TypeScript
+- [x] Part 9: [TypeScript](https://github.com/rauhja/FullStackOpen/tree/main/Osa9)
 - [ ] Part 10: [React Native](https://github.com/rauhja/FullStackOpen/tree/main/Osa10)
 - [ ] Part 11: CI/CD
 - [ ] Part 12: Containers
